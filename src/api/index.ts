@@ -7,6 +7,7 @@ const PORT = process.env.PORT;
 
 // routes import
 
+import films from './routes/Films';
 import favorites from './routes/Favorites';
 
 // basic middlewares, CORS - accepts requests from all origin
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // routes handling
 
+app.use('/films', films);
 app.use('/favorites', favorites);
 
 // server listener
