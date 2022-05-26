@@ -60,16 +60,18 @@ const favoritesController = {
         id: req.params.id,
       });
       await getFavoritesIdFileHandler(data);
-      res.download(
-        path.join(__dirname, 'file.xlsx'),
-        `${req.params.id}.xlsx`,
-        function (err) {
-          if (err) throw err;
-          unlink(`${__dirname}/file.xlsx`, (err) => {
+      res
+        .status(200)
+        .download(
+          path.join(__dirname, 'file.xlsx'),
+          `${req.params.id}.xlsx`,
+          function (err) {
             if (err) throw err;
-          });
-        }
-      );
+            unlink(`${__dirname}/file.xlsx`, (err) => {
+              if (err) throw err;
+            });
+          }
+        );
     } catch (e) {
       return res.status(500).json({ status: false });
     }
