@@ -16,9 +16,10 @@ Run API :
 
 3. npm run dev
 
-Test API:
+Test API: // database should contain records
 
-1. npm run test
+1. Run application (npm run dev)
+2. npm run test
 
 Build to production
 
