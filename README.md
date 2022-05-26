@@ -3,7 +3,7 @@ Movies API
 Run API :
 
 1. npm install
-2. Create .env file in root folder, which specified database's parameters
+2. Create .env file in root folder, which specified database's parameters <br/>
    .env structure :
 
    PORT= <br />
