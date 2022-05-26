@@ -38,6 +38,10 @@ const favoritesController = {
   },
   getFavoritesId: async function (req: Request, res: Response) {
     try {
+      const payload = await Lists.findOneBy({
+        id: req.params.id,
+      });
+      return res.status(200).json({ status: true, payload });
     } catch (e) {
       return res.status(500).json({ status: false });
     }
