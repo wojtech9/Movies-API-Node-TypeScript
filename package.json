@@ -39,6 +39,7 @@
     "express": "^4.18.1",
     "pg": "^8.7.3",
     "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.3.6"
+    "typeorm": "^0.3.6",
+    "write-excel-file": "^1.4.4"
   }
 }

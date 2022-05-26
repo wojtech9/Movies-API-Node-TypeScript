@@ -1,19 +1,27 @@
+import { Lists } from '../entities/Lists';
+import path from 'path';
+import { unlink } from 'fs';
+
+//types
+
 import { Request, Response } from 'express';
-import axios from 'axios';
 import FavoritesPayload from '../interfaces/favoritesPayload.interface';
 import FavoritesFilms from '../interfaces/favoritesFilms.interface';
-import { Lists } from '../entities/Lists';
 
 //helpers
 
 import postFavoritesHandler from '../helpers/favorites/postFavoritesHandler';
+import getFavoritesIdFileHandler from '../helpers/favorites/getFavoritesIdFileHandler';
 
 // favoritesController contains request handlers for /favorites routes
 
 const favoritesController = {
   postFavorites: async function (req: Request, res: Response) {
     try {
-      const userPayload = { listName: req.body.listName, ids: req.body.ids };
+      const userPayload: FavoritesPayload = {
+        listName: req.body.listName,
+        ids: req.body.ids,
+      };
       const data: FavoritesFilms = await postFavoritesHandler(userPayload);
       const list = Lists.create(data as any);
       await list.save();
@@ -48,6 +56,20 @@ const favoritesController = {
   },
   getFavoritesIdFile: async function (req: Request, res: Response) {
     try {
+      const data = await Lists.findOneBy({
+        id: req.params.id,
+      });
+      await getFavoritesIdFileHandler(data);
+      res.download(
+        path.join(__dirname, 'file.xlsx'),
+        `${req.params.id}.xlsx`,
+        function (err) {
+          if (err) throw err;
+          unlink(`${__dirname}/file.xlsx`, (err) => {
+            if (err) throw err;
+          });
+        }
+      );
     } catch (e) {
       return res.status(500).json({ status: false });
     }
