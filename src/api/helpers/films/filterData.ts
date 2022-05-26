@@ -1,4 +1,4 @@
-import Film from '../../interfaces/film.interface';
+import Film from '../../interfaces/getFilm.interface';
 
 // function creates table, which contains specific data
 

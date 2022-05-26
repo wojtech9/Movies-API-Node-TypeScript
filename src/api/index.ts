@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import 'reflect-metadata';
+import dbConnect from './database/dbConnect';
 const app = express();
 require('dotenv').config();
-const PORT = process.env.PORT;
 
 // routes import
 
@@ -21,8 +22,21 @@ app.use(express.json());
 app.use('/films', films);
 app.use('/favorites', favorites);
 
-// server listener
+// db settings
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT}...`);
+const db = {
+  type: process.env.DB_TYPE,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+};
+
+// db connection and server listener
+
+dbConnect(db).then(() => {
+  app.listen(process.env.PORT, async () => {
+    console.log(`Server is listening on port ${process.env.PORT}...`);
+  });
 });
